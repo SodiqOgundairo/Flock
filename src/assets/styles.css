@@ -137,10 +137,9 @@
 }
 
 /* =============================================================================
-   DARK MODE - LIQUID GLASS
-   ============================================================================= */
+   DARK MODE - LIQUID GLASS (Disabled for minimalist light mode focus)
+   ============================================================================= 
 @theme dark {
-  /* Dark glass variables */
   --glass-bg: rgba(18, 18, 18, 0.65);
   --glass-bg-strong: rgba(18, 18, 18, 0.85);
   --glass-border: rgba(255, 255, 255, 0.1);
@@ -154,7 +153,6 @@
   --glass-input-border: rgba(255, 255, 255, 0.15);
   --glass-input-focus-bg: rgba(40, 40, 38, 0.75);
 
-  /* Component colors */
   --color-background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   --color-foreground: var(--color-seasalt);
   --color-card: var(--glass-card-bg);
@@ -166,12 +164,11 @@
   --color-border: var(--glass-border);
   --color-input: var(--glass-input-bg);
 
-  /* Shadows */
   --shadow-sm: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
   --shadow-xl: 0 12px 48px 0 rgba(0, 0, 0, 0.6);
-}
+} */
 
 /* =============================================================================
    BASE STYLES

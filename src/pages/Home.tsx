@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import {
@@ -14,7 +13,7 @@ export default function Home() {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-true-azure/5 via-sunflower-gold/5 to-fresh-sky/5" />
+      <div className="absolute inset-0 bg-linear-to-br from-true-azure/5 via-sunflower-gold/5 to-fresh-sky/5" />
 
       {/* Glass orbs for visual interest */}
       <motion.div
