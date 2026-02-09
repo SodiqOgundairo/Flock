@@ -16,7 +16,10 @@ import {
   ChevronRight,
   LogOut,
 } from "lucide-react";
-import { MeshBackground } from "../components/ui/MeshBackground";
+import { MeshBackground } from "@/components/ui/MeshBackground";
+import { GlassCard } from "@/components/ui/GlassCard";
+import { cn } from "@/lib/utils";
+import { LOGO } from "@/lib/assets";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
@@ -37,127 +40,163 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen relative font-sans text-gray-900 overflow-hidden">
+    <div className="min-h-screen relative font-sans text-gray-900 overflow-hidden font-outfit">
       <MeshBackground />
 
-      {/* Sidebar - Desktop */}
-      <aside className="hidden lg:flex fixed left-6 top-6 bottom-6 w-72 flex-col z-40">
-        <div className="flex-1 bg-white/40 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] shadow-2xl p-8 flex flex-col gap-10">
-          <div className="flex items-center gap-3 px-2">
-            <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-true-azure to-dark-amethyst flex items-center justify-center shadow-lg shadow-true-azure/20">
-              <span className="text-white font-bold text-2xl font-outfit">
-                F
-              </span>
-            </div>
-            <span className="font-bold text-2xl tracking-tight font-outfit">
-              Flock
-            </span>
-          </div>
-
-          <nav className="flex-1 space-y-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                className={`
-                  flex items-center gap-3 px-5 py-4 rounded-2xl text-sm font-bold transition-all group relative
-                  ${
-                    isActive(item.href)
-                      ? "bg-true-azure text-white shadow-xl shadow-true-azure/20"
-                      : "text-gray-400 hover:text-gray-900 hover:bg-white/50"
-                  }
-                `}
-              >
-                <item.icon
-                  className={`h-5 w-5 transition-transform group-hover:scale-110 ${isActive(item.href) ? "text-white" : ""}`}
-                />
-                <span className="font-outfit">{item.label}</span>
-                {isActive(item.href) && (
-                  <motion.div
-                    layoutId="active-indicator"
-                    className="absolute right-4 w-1.5 h-1.5 rounded-full bg-white"
-                  />
-                )}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="pt-6 border-t border-white/20">
-            <div className="bg-white/40 rounded-3xl p-4 border border-white/50 mb-4">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 px-1">
-                Active Branch
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-sunflower-gold/20 flex items-center justify-center text-sunflower-gold">
-                  <ChevronRight className="h-4 w-4" />
-                </div>
-                <span className="text-sm font-bold text-gray-900 truncate font-outfit">
-                  Lekki Branch
-                </span>
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              className="w-full justify-start gap-3 h-14 rounded-2xl text-red-500 hover:bg-red-50/50 hover:text-red-600 transition-colors"
-            >
-              <LogOut className="h-5 w-5" />
-              <span className="font-outfit font-bold">Sign Out</span>
-            </Button>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <div className="flex-1 lg:ml-[22rem] p-6 lg:p-10 min-h-screen relative z-10">
-        {/* Header */}
-        <header className="flex items-center justify-between mb-10">
-          <div className="flex-1 max-w-xl relative hidden md:block">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-300 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Quick search anything..."
-              className="w-full h-14 pl-12 pr-4 bg-white/40 backdrop-blur-xl border border-white/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-true-azure/20 transition-all font-outfit"
+      {/* Sidebar - Desktop Glass Card */}
+      <aside className="hidden lg:block fixed left-6 top-6 bottom-6 w-72 z-40">
+        <GlassCard
+          intensity="medium"
+          hoverEffect="none"
+          className="h-full flex flex-col gap-8 p-6 rounded-4xl border-white/40 shadow-xl"
+        >
+          {/* Logo Area */}
+          <div className="flex items-center px-2 mb-2 group">
+            <img
+              src={LOGO.svg}
+              alt="Flock"
+              className="h-10 w-auto transition-transform group-hover:scale-105"
             />
           </div>
 
-          <div className="flex items-center gap-4 ml-auto">
-            <div className="flex gap-2 mr-2">
-              <button className="w-12 h-12 rounded-2xl bg-white/40 backdrop-blur-xl border border-white/50 flex items-center justify-center group transition-all hover:scale-105">
-                <Bell className="h-5 w-5 text-gray-400 group-hover:text-true-azure transition-colors" />
-              </button>
-              <button className="w-12 h-12 rounded-2xl bg-white/40 backdrop-blur-xl border border-white/50 flex items-center justify-center group transition-all hover:scale-105">
-                <Settings className="h-5 w-5 text-gray-400 group-hover:text-true-azure transition-colors" />
-              </button>
+          {/* Navigation */}
+          <nav className="flex-1 space-y-2 overflow-y-auto pr-2 scrollbar-hide">
+            {navItems.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={cn(
+                    "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all group relative",
+                    active
+                      ? "bg-primary text-white shadow-lg shadow-primary/25"
+                      : "text-gray-500 hover:text-gray-900 hover:bg-white/40",
+                  )}
+                >
+                  <item.icon
+                    className={cn(
+                      "h-5 w-5 transition-transform group-hover:scale-110",
+                      active
+                        ? "text-white"
+                        : "text-gray-400 group-hover:text-primary",
+                    )}
+                  />
+                  <span>{item.label}</span>
+
+                  {active && (
+                    <motion.div
+                      layoutId="active-indicator"
+                      className="absolute right-3 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                    />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Branch & User Footer */}
+          <div className="pt-6 border-t border-white/20 space-y-4">
+            {/* Branch Selector */}
+            <div className="bg-white/30 rounded-2xl p-3 border border-white/40 flex items-center gap-3 transition-colors hover:bg-white/40 cursor-pointer group">
+              <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 group-hover:bg-amber-200 transition-colors">
+                <ChevronRight className="h-4 w-4" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">
+                  Active Branch
+                </p>
+                <p className="text-sm font-bold text-gray-800 truncate">
+                  Lekki Branch
+                </p>
+              </div>
             </div>
 
-            <div className="h-10 w-px bg-black/5 mx-2" />
+            <Button
+              variant="ghost"
+              className="w-full justify-start gap-3 h-12 rounded-xl text-red-500 hover:bg-red-50/50 hover:text-red-600 hover:shadow-sm transition-all"
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="font-semibold text-sm">Sign Out</span>
+            </Button>
+          </div>
+        </GlassCard>
+      </aside>
 
-            <div className="flex items-center gap-4 bg-white/40 backdrop-blur-xl border border-white/50 p-1.5 pr-5 rounded-2xl shadow-sm transition-all hover:shadow-md">
-              <div className="w-10 h-10 rounded-xl overflow-hidden bg-true-azure flex items-center justify-center text-white font-bold font-outfit ring-4 ring-white/30">
+      {/* Main Content Area */}
+      <div className="flex-1 lg:ml-80 p-4 lg:p-8 min-h-screen relative z-10 transition-all duration-300">
+        {/* Header */}
+        <header className="flex items-center justify-between mb-8 lg:mb-10 gap-4">
+          {/* Search Bar - Floating Glass */}
+          <div className="flex-1 max-w-xl relative hidden md:block group">
+            <GlassCard
+              intensity="low"
+              hoverEffect="glow"
+              className="rounded-2xl p-0 flex items-center overflow-hidden h-14 border-white/50 focus-within:border-primary/40 focus-within:ring-4 focus-within:ring-primary/5 transition-all"
+            >
+              <Search className="absolute left-4 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search specifically for..."
+                className="w-full h-full pl-12 pr-4 bg-transparent border-none outline-none text-gray-700 placeholder:text-gray-400 font-medium"
+              />
+            </GlassCard>
+          </div>
+
+          <div className="flex items-center gap-3 lg:gap-4 ml-auto">
+            {/* Actions */}
+            <div className="flex gap-2">
+              <GlassCard
+                intensity="low"
+                hoverEffect="lift"
+                className="w-12 h-12 rounded-xl flex items-center justify-center text-gray-500 hover:text-primary active:scale-95 transition-all cursor-pointer"
+              >
+                <Bell className="h-5 w-5" />
+              </GlassCard>
+              <GlassCard
+                intensity="low"
+                hoverEffect="lift"
+                className="w-12 h-12 rounded-xl flex items-center justify-center text-gray-500 hover:text-primary active:scale-95 transition-all cursor-pointer"
+              >
+                <Settings className="h-5 w-5" />
+              </GlassCard>
+            </div>
+
+            <div className="h-8 w-px bg-gray-200/50 hidden sm:block" />
+
+            {/* Profile Pill */}
+            <GlassCard
+              intensity="low"
+              hoverEffect="lift"
+              className="flex items-center gap-3 px-2 py-1.5 pr-4 rounded-xl cursor-pointer"
+            >
+              <div className="w-9 h-9 rounded-lg bg-linear-to-br from-primary to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-primary/20">
                 AD
               </div>
               <div className="hidden sm:block text-left">
-                <p className="text-sm font-bold text-gray-900 leading-none font-outfit">
-                  Admin
+                <p className="text-sm font-bold text-gray-800 leading-none">
+                  Admin User
                 </p>
-                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">
+                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
                   Super Admin
                 </p>
               </div>
-            </div>
+            </GlassCard>
 
             {/* Mobile menu trigger */}
-            <button
+            <GlassCard
+              intensity="low"
+              hoverEffect="scale"
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden w-12 h-12 rounded-2xl bg-white/40 backdrop-blur-xl border border-white/50 flex items-center justify-center"
+              className="lg:hidden w-12 h-12 rounded-xl flex items-center justify-center text-gray-800"
             >
-              <Menu className="h-6 w-6 text-gray-900" />
-            </button>
+              <Menu className="h-6 w-6" />
+            </GlassCard>
           </div>
         </header>
 
         {/* Dynamic Page Content */}
-        <div className="relative z-10">
+        <div className="relative z-10 animate-fade-in-up">
           <Outlet />
         </div>
       </div>
@@ -171,51 +210,58 @@ export default function AdminLayout() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[60] lg:hidden"
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-60 lg:hidden"
             />
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 left-0 bottom-0 w-80 bg-white/80 backdrop-blur-2xl z-[70] p-8 lg:hidden"
+              className="fixed top-0 left-0 bottom-0 w-80 z-70 lg:hidden"
             >
-              <div className="flex items-center justify-between mb-12">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-true-azure flex items-center justify-center shadow-lg shadow-true-azure/20">
-                    <span className="text-white font-bold text-xl font-outfit">
+              <GlassCard
+                intensity="high"
+                className="h-full w-full rounded-r-4xl p-6 flex flex-col"
+              >
+                <div className="flex items-center justify-between mb-10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-xl shadow-lg">
                       F
+                    </div>
+                    <span className="font-bold text-2xl tracking-tight text-gray-900">
+                      Flock
                     </span>
                   </div>
-                  <span className="font-bold text-2xl tracking-tight font-outfit">
-                    Flock
-                  </span>
-                </div>
-                <button onClick={() => setIsMobileMenuOpen(false)}>
-                  <X className="h-6 w-6 text-gray-400" />
-                </button>
-              </div>
-
-              <nav className="space-y-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    to={item.href}
+                  <button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`
-                      flex items-center gap-4 p-5 rounded-2xl text-lg font-bold transition-all
-                      ${
-                        isActive(item.href)
-                          ? "bg-true-azure text-white"
-                          : "text-gray-500 hover:bg-gray-100/50"
-                      }
-                    `}
+                    className="p-2 hover:bg-black/5 rounded-full transition-colors"
                   >
-                    <item.icon className="h-6 w-6" />
-                    <span className="font-outfit">{item.label}</span>
-                  </Link>
-                ))}
-              </nav>
+                    <X className="h-6 w-6 text-gray-500" />
+                  </button>
+                </div>
+
+                <nav className="flex-1 space-y-2">
+                  {navItems.map((item) => {
+                    const active = isActive(item.href);
+                    return (
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={cn(
+                          "flex items-center gap-4 p-4 rounded-xl text-lg font-medium transition-all border border-transparent",
+                          active
+                            ? "bg-primary text-white shadow-lg shadow-primary/20"
+                            : "text-gray-500 hover:bg-white/50 hover:border-white/60",
+                        )}
+                      >
+                        <item.icon className="h-6 w-6" />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </GlassCard>
             </motion.aside>
           </>
         )}

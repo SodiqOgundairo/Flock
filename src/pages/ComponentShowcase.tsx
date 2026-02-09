@@ -77,7 +77,7 @@ import {
   MoreVertical,
   Info,
 } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export default function ComponentShowcase() {
   const [dialogOpen, setDialogOpen] = React.useState(false);
