@@ -1,123 +1,112 @@
 import React from "react";
 import { motion } from "motion/react";
+import { useTheme } from "@/components/ThemeProvider";
 
 export const MeshBackground: React.FC = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-white">
-      <div className="absolute inset-0 bg-radial-gradient from-white via-white to-gray-50 opacity-80" />
+    <div
+      className="fixed inset-0 -z-10 overflow-hidden theme-transition"
+      style={{ background: isDark ? "#0c0a1d" : "#f8f7f4" }}
+    >
+      {/* Base radial glow */}
+      <div
+        className="absolute inset-0 opacity-70"
+        style={{
+          background: isDark
+            ? "radial-gradient(ellipse at 30% 20%, rgba(79,70,229,0.12) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.08) 0%, transparent 50%)"
+            : "radial-gradient(ellipse at 30% 20%, rgba(79,70,229,0.06) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(244,63,94,0.04) 0%, transparent 50%)",
+        }}
+      />
 
-      {/* 
-        LIQUID ORBS - SLOWER, SOFTER, MORE ORGANIC 
-        Note: Using specific hex codes for maximum control over the gradient stops
-      */}
-
-      {/* 1. Primary Azure Fluid - The deep anchor */}
+      {/* Orb 1 — Primary indigo */}
       <motion.div
         animate={{
           x: [-20, 40, -10, -20],
           y: [-20, 30, 10, -20],
           scale: [1, 1.1, 0.95, 1],
-          rotate: [0, 10, -5, 0],
         }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-[-10%] left-[-10%] w-[70vw] h-[70vw] rounded-full mix-blend-multiply filter blur-[100px] opacity-40 bg-purple-300"
+        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[-10%] left-[-5%] w-[60vw] h-[60vw] rounded-full"
         style={{
-          background:
-            "radial-gradient(circle, rgba(79,70,229,0.4) 0%, rgba(167,139,250,0.1) 70%, transparent 100%)",
+          background: isDark
+            ? "radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(139,92,246,0.05) 50%, transparent 80%)"
+            : "radial-gradient(circle, rgba(79,70,229,0.12) 0%, rgba(167,139,250,0.04) 50%, transparent 80%)",
+          filter: "blur(80px)",
         }}
       />
 
-      {/* 2. Soft Coral Flow - Warmth & Humanity */}
+      {/* Orb 2 — Warm rose */}
       <motion.div
         animate={{
           x: [20, -30, 10, 20],
           y: [10, -40, 20, 10],
           scale: [1.1, 0.9, 1.05, 1.1],
-          rotate: [0, -15, 5, 0],
         }}
-        transition={{
-          duration: 28,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-[20%] right-[-5%] w-[60vw] h-[60vw] rounded-full mix-blend-multiply filter blur-[90px] opacity-30 bg-rose-200"
+        transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[25%] right-[-5%] w-[50vw] h-[50vw] rounded-full"
         style={{
-          background:
-            "radial-gradient(circle, rgba(251,113,133,0.3) 0%, rgba(253,164,175,0.1) 60%, transparent 100%)",
+          background: isDark
+            ? "radial-gradient(circle, rgba(244,63,94,0.1) 0%, rgba(251,113,133,0.03) 50%, transparent 80%)"
+            : "radial-gradient(circle, rgba(244,63,94,0.08) 0%, rgba(253,164,175,0.03) 50%, transparent 80%)",
+          filter: "blur(90px)",
         }}
       />
 
-      {/* 3. Golden Sun Drift - Optimism & Energy */}
+      {/* Orb 3 — Golden warmth */}
       <motion.div
         animate={{
           x: [-10, 20, -30, -10],
           y: [-30, 10, 40, -30],
           scale: [0.9, 1.1, 0.95, 0.9],
         }}
-        transition={{
-          duration: 32,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bottom-[-10%] left-[20%] w-[50vw] h-[50vw] rounded-full mix-blend-multiply filter blur-[110px] opacity-25 bg-amber-100"
+        transition={{ duration: 32, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-[-10%] left-[20%] w-[45vw] h-[45vw] rounded-full"
         style={{
-          background:
-            "radial-gradient(circle, rgba(252,211,77,0.3) 0%, rgba(253,230,138,0.1) 60%, transparent 100%)",
+          background: isDark
+            ? "radial-gradient(circle, rgba(245,158,11,0.1) 0%, rgba(252,211,77,0.03) 50%, transparent 80%)"
+            : "radial-gradient(circle, rgba(245,158,11,0.08) 0%, rgba(253,230,138,0.03) 50%, transparent 80%)",
+          filter: "blur(100px)",
         }}
       />
 
-      {/* 4. Mint/Teal Whisper - Freshness */}
+      {/* Orb 4 — Teal accent */}
       <motion.div
         animate={{
           x: [30, -20, 10, 30],
           y: [20, 10, -30, 20],
           scale: [1, 0.9, 1.1, 1],
         }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-[40%] left-[40%] w-[40vw] h-[40vw] rounded-full mix-blend-multiply filter blur-[80px] opacity-20 bg-teal-200"
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[45%] left-[35%] w-[35vw] h-[35vw] rounded-full"
         style={{
-          background:
-            "radial-gradient(circle, rgba(45,212,191,0.25) 0%, rgba(153,246,228,0.1) 60%, transparent 100%)",
+          background: isDark
+            ? "radial-gradient(circle, rgba(14,165,233,0.08) 0%, rgba(56,189,248,0.02) 50%, transparent 80%)"
+            : "radial-gradient(circle, rgba(14,165,233,0.06) 0%, rgba(56,189,248,0.02) 50%, transparent 80%)",
+          filter: "blur(80px)",
         }}
       />
 
-      {/* 5. Deep Indigo Shadow - Depth & Contrast */}
-      <motion.div
-        animate={{
-          x: [0, 40, -20, 0],
-          y: [0, -30, 20, 0],
-          scale: [1, 1.2, 0.9, 1],
-        }}
-        transition={{
-          duration: 35,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bottom-[10%] right-[10%] w-[45vw] h-[45vw] rounded-full mix-blend-multiply filter blur-[120px] opacity-15 bg-indigo-200"
+      {/* Subtle grain texture */}
+      <div
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(circle, rgba(49,46,129,0.2) 0%, rgba(99,102,241,0.05) 60%, transparent 100%)",
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E")`,
+          opacity: isDark ? 0.02 : 0.03,
         }}
       />
 
-      {/* NOISE & TEXTURE OVERLAYS - ESSENTIAL FOR "PREMIUM" FEEL */}
-
-      {/* Grain/Noise - Adds tactile feel, prevents banding */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay pointer-events-none brightness-100 contrast-150" />
-
-      {/* Subtle Grid - Adds technical structure (very faint) */}
-      <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[24px_24px]" />
-
-      {/* Vignette - Draws focus to center */}
-      <div className="absolute inset-0 bg-radial-gradient from-transparent via-transparent to-white/60 pointer-events-none" />
+      {/* Vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: isDark
+            ? "radial-gradient(ellipse at center, transparent 40%, rgba(12,10,29,0.5) 100%)"
+            : "radial-gradient(ellipse at center, transparent 40%, rgba(248,247,244,0.6) 100%)",
+        }}
+      />
     </div>
   );
 };

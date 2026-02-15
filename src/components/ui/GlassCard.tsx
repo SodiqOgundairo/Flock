@@ -1,9 +1,11 @@
 import React from "react";
 import { motion } from "motion/react";
-import type { HTMLMotionProps } from "framer-motion";
-import { cn } from "../../lib/utils";
+import type { ComponentProps } from "react";
+import { cn } from "@/lib/utils";
 
-interface GlassCardProps extends HTMLMotionProps<"div"> {
+type MotionDivProps = ComponentProps<typeof motion.div>;
+
+interface GlassCardProps extends MotionDivProps {
   children: React.ReactNode;
   className?: string;
   hoverEffect?: "none" | "lift" | "glow" | "scale";
@@ -23,29 +25,24 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
     },
     ref,
   ) => {
-    // Map intensity to base classes
     const intensityStyles = {
-      low: "glass-panel bg-white/20 backdrop-blur-sm",
-      medium: "glass-panel", // Uses our utility
-      high: "glass-panel bg-white/80 backdrop-blur-xl border-white/60 shadow-xl",
+      low: "glass-panel opacity-80",
+      medium: "glass-panel",
+      high: "glass-panel",
     };
 
-    // Map hover effects
     const hoverStyles = {
       none: "",
       lift: "glass-panel-hover",
-      glow: "hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] hover:border-primary/30 transition-all duration-300",
+      glow: "hover:shadow-[0_0_40px_rgba(79,70,229,0.2)] hover:border-[var(--color-primary)]/20 transition-all duration-300",
       scale: "hover:scale-[1.02] transition-transform duration-300",
     };
 
-    // Optional subtle gradient overlays
     const gradientStyles = {
       none: "",
-      subtle: "bg-linear-to-br from-white/40 to-white/10",
-      primary:
-        "bg-linear-to-br from-primary/5 to-transparent border-primary/20",
-      accent:
-        "bg-linear-to-br from-amber-400/5 to-transparent border-amber-400/20",
+      subtle: "",
+      primary: "border-[var(--color-primary)]/15",
+      accent: "border-amber-400/15",
     };
 
     return (
@@ -63,9 +60,14 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
         transition={{ duration: 0.4, ease: "easeOut" }}
         {...props}
       >
-        {/* Optional: Inner shine reflection for extra glassiness */}
-        <div className="absolute inset-0 bg-linear-to-b from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
+        {/* Inner shimmer layer */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, var(--color-glass-inner-glow), transparent)",
+          }}
+        />
         {children}
       </motion.div>
     );

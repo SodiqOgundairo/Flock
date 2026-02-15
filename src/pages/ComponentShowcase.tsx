@@ -58,7 +58,7 @@ import {
   TableHeader,
   TableRow,
 } from "@yems-ui/core";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+
 import {
   Users,
   DollarSign,
@@ -110,7 +110,6 @@ export default function ComponentShowcase() {
               </h1>
             </motion.div>
             <div className="flex items-center gap-3">
-              <ThemeSwitcher />
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" alt="User" />
                 <AvatarFallback>JD</AvatarFallback>

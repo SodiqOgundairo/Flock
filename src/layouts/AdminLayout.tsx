@@ -40,17 +40,17 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen relative font-sans text-gray-900 overflow-hidden font-outfit">
+    <div className="min-h-screen relative font-sans overflow-hidden font-outfit">
       <MeshBackground />
 
-      {/* Sidebar - Desktop Glass Card */}
+      {/* Sidebar - Desktop */}
       <aside className="hidden lg:block fixed left-6 top-6 bottom-6 w-72 z-40">
         <GlassCard
           intensity="medium"
           hoverEffect="none"
-          className="h-full flex flex-col gap-8 p-6 rounded-4xl border-white/40 shadow-xl"
+          className="h-full flex flex-col gap-8 p-6 rounded-4xl"
         >
-          {/* Logo Area */}
+          {/* Logo */}
           <div className="flex items-center px-2 mb-2 group">
             <img
               src={LOGO.svg}
@@ -60,7 +60,7 @@ export default function AdminLayout() {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 space-y-2 overflow-y-auto pr-2 scrollbar-hide">
+          <nav className="flex-1 space-y-1.5 overflow-y-auto pr-2 scrollbar-hide">
             {navItems.map((item) => {
               const active = isActive(item.href);
               return (
@@ -71,16 +71,20 @@ export default function AdminLayout() {
                     "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all group relative",
                     active
                       ? "bg-primary text-white shadow-lg shadow-primary/25"
-                      : "text-gray-500 hover:text-gray-900 hover:bg-white/40",
+                      : "hover:bg-primary/10",
                   )}
+                  style={
+                    !active ? { color: "var(--color-text-muted)" } : undefined
+                  }
                 >
                   <item.icon
                     className={cn(
                       "h-5 w-5 transition-transform group-hover:scale-110",
-                      active
-                        ? "text-white"
-                        : "text-gray-400 group-hover:text-primary",
+                      active ? "text-white" : "",
                     )}
+                    style={
+                      !active ? { color: "var(--color-text-faint)" } : undefined
+                    }
                   />
                   <span>{item.label}</span>
 
@@ -95,18 +99,39 @@ export default function AdminLayout() {
             })}
           </nav>
 
-          {/* Branch & User Footer */}
-          <div className="pt-6 border-t border-white/20 space-y-4">
+          {/* Footer */}
+          <div
+            className="pt-6 space-y-4"
+            style={{ borderTop: "1px solid var(--color-glass-border-subtle)" }}
+          >
             {/* Branch Selector */}
-            <div className="bg-white/30 rounded-2xl p-3 border border-white/40 flex items-center gap-3 transition-colors hover:bg-white/40 cursor-pointer group">
-              <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 group-hover:bg-amber-200 transition-colors">
+            <div
+              className="rounded-2xl p-3 flex items-center gap-3 transition-colors cursor-pointer group"
+              style={{
+                background: "var(--color-glass-bg)",
+                border: "1px solid var(--color-glass-border-subtle)",
+              }}
+            >
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
+                style={{
+                  background: "rgba(245, 158, 11, 0.1)",
+                  color: "var(--color-accent-amber)",
+                }}
+              >
                 <ChevronRight className="h-4 w-4" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">
+                <p
+                  className="text-[10px] font-bold uppercase tracking-widest leading-none mb-1"
+                  style={{ color: "var(--color-text-faint)" }}
+                >
                   Active Branch
                 </p>
-                <p className="text-sm font-bold text-gray-800 truncate">
+                <p
+                  className="text-sm font-bold truncate"
+                  style={{ color: "var(--color-text-heading)" }}
+                >
                   Lekki Branch
                 </p>
               </div>
@@ -114,7 +139,7 @@ export default function AdminLayout() {
 
             <Button
               variant="ghost"
-              className="w-full justify-start gap-3 h-12 rounded-xl text-red-500 hover:bg-red-50/50 hover:text-red-600 hover:shadow-sm transition-all"
+              className="w-full justify-start gap-3 h-12 rounded-xl text-red-500 hover:bg-red-50/50 dark:hover:bg-red-900/20 hover:text-red-600 transition-all"
             >
               <LogOut className="h-4 w-4" />
               <span className="font-semibold text-sm">Sign Out</span>
@@ -123,46 +148,54 @@ export default function AdminLayout() {
         </GlassCard>
       </aside>
 
-      {/* Main Content Area */}
+      {/* Main Content */}
       <div className="flex-1 lg:ml-80 p-4 lg:p-8 min-h-screen relative z-10 transition-all duration-300">
         {/* Header */}
         <header className="flex items-center justify-between mb-8 lg:mb-10 gap-4">
-          {/* Search Bar - Floating Glass */}
+          {/* Search */}
           <div className="flex-1 max-w-xl relative hidden md:block group">
-            <GlassCard
-              intensity="low"
-              hoverEffect="glow"
-              className="rounded-2xl p-0 flex items-center overflow-hidden h-14 border-white/50 focus-within:border-primary/40 focus-within:ring-4 focus-within:ring-primary/5 transition-all"
-            >
-              <Search className="absolute left-4 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors pointer-events-none" />
+            <div className="glass-panel rounded-2xl flex items-center overflow-hidden h-14">
+              <Search
+                className="absolute left-4 h-5 w-5 pointer-events-none"
+                style={{ color: "var(--color-text-faint)" }}
+              />
               <input
                 type="text"
                 placeholder="Search specifically for..."
-                className="w-full h-full pl-12 pr-4 bg-transparent border-none outline-none text-gray-700 placeholder:text-gray-400 font-medium"
+                className="w-full h-full pl-12 pr-4 bg-transparent border-none outline-none font-medium"
+                style={{ color: "var(--color-text-body)" }}
               />
-            </GlassCard>
+            </div>
           </div>
 
           <div className="flex items-center gap-3 lg:gap-4 ml-auto">
-            {/* Actions */}
             <div className="flex gap-2">
               <GlassCard
                 intensity="low"
                 hoverEffect="lift"
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-gray-500 hover:text-primary active:scale-95 transition-all cursor-pointer"
+                className="w-12 h-12 rounded-xl flex items-center justify-center active:scale-95 transition-all cursor-pointer"
               >
-                <Bell className="h-5 w-5" />
+                <Bell
+                  className="h-5 w-5"
+                  style={{ color: "var(--color-text-muted)" }}
+                />
               </GlassCard>
               <GlassCard
                 intensity="low"
                 hoverEffect="lift"
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-gray-500 hover:text-primary active:scale-95 transition-all cursor-pointer"
+                className="w-12 h-12 rounded-xl flex items-center justify-center active:scale-95 transition-all cursor-pointer"
               >
-                <Settings className="h-5 w-5" />
+                <Settings
+                  className="h-5 w-5"
+                  style={{ color: "var(--color-text-muted)" }}
+                />
               </GlassCard>
             </div>
 
-            <div className="h-8 w-px bg-gray-200/50 hidden sm:block" />
+            <div
+              className="h-8 w-px hidden sm:block"
+              style={{ background: "var(--color-glass-border-subtle)" }}
+            />
 
             {/* Profile Pill */}
             <GlassCard
@@ -170,14 +203,26 @@ export default function AdminLayout() {
               hoverEffect="lift"
               className="flex items-center gap-3 px-2 py-1.5 pr-4 rounded-xl cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-lg bg-linear-to-br from-primary to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-primary/20">
+              <div
+                className="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-md shadow-primary/20"
+                style={{
+                  background:
+                    "linear-gradient(135deg, var(--color-primary), #6366f1)",
+                }}
+              >
                 AD
               </div>
               <div className="hidden sm:block text-left">
-                <p className="text-sm font-bold text-gray-800 leading-none">
+                <p
+                  className="text-sm font-bold leading-none"
+                  style={{ color: "var(--color-text-heading)" }}
+                >
                   Admin User
                 </p>
-                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                <p
+                  className="text-[10px] font-bold uppercase tracking-widest mt-0.5"
+                  style={{ color: "var(--color-text-faint)" }}
+                >
                   Super Admin
                 </p>
               </div>
@@ -188,15 +233,18 @@ export default function AdminLayout() {
               intensity="low"
               hoverEffect="scale"
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden w-12 h-12 rounded-xl flex items-center justify-center text-gray-800"
+              className="lg:hidden w-12 h-12 rounded-xl flex items-center justify-center"
             >
-              <Menu className="h-6 w-6" />
+              <Menu
+                className="h-6 w-6"
+                style={{ color: "var(--color-text-heading)" }}
+              />
             </GlassCard>
           </div>
         </header>
 
-        {/* Dynamic Page Content */}
-        <div className="relative z-10 animate-fade-in-up">
+        {/* Page Content */}
+        <div className="relative z-10">
           <Outlet />
         </div>
       </div>
@@ -225,18 +273,14 @@ export default function AdminLayout() {
               >
                 <div className="flex items-center justify-between mb-10">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                      F
-                    </div>
-                    <span className="font-bold text-2xl tracking-tight text-gray-900">
-                      Flock
-                    </span>
+                    <img src={LOGO.svg} alt="Flock" className="h-10 w-auto" />
                   </div>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 hover:bg-black/5 rounded-full transition-colors"
+                    className="p-2 rounded-full transition-colors"
+                    style={{ color: "var(--color-text-muted)" }}
                   >
-                    <X className="h-6 w-6 text-gray-500" />
+                    <X className="h-6 w-6" />
                   </button>
                 </div>
 
@@ -249,11 +293,16 @@ export default function AdminLayout() {
                         to={item.href}
                         onClick={() => setIsMobileMenuOpen(false)}
                         className={cn(
-                          "flex items-center gap-4 p-4 rounded-xl text-lg font-medium transition-all border border-transparent",
+                          "flex items-center gap-4 p-4 rounded-xl text-lg font-medium transition-all",
                           active
                             ? "bg-primary text-white shadow-lg shadow-primary/20"
-                            : "text-gray-500 hover:bg-white/50 hover:border-white/60",
+                            : "",
                         )}
+                        style={
+                          !active
+                            ? { color: "var(--color-text-muted)" }
+                            : undefined
+                        }
                       >
                         <item.icon className="h-6 w-6" />
                         <span>{item.label}</span>

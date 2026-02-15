@@ -12,7 +12,6 @@ import {
 import { GlassCard } from "@/components/ui/GlassCard";
 import { cn } from "@/lib/utils";
 
-// Mock data - will be replaced with Supabase queries
 const stats = [
   {
     title: "Total Members",
@@ -20,7 +19,8 @@ const stats = [
     description: "+12% from last month",
     trend: { value: 12, isPositive: true },
     icon: Users,
-    gradient: "primary" as const,
+    color: "var(--color-primary)",
+    bgColor: "rgba(79, 70, 229, 0.08)",
   },
   {
     title: "Active Groups",
@@ -28,7 +28,8 @@ const stats = [
     description: "+2 new groups",
     trend: { value: 2, isPositive: true },
     icon: UserCircle,
-    gradient: "subtle" as const,
+    color: "var(--color-accent-sky)",
+    bgColor: "rgba(14, 165, 233, 0.08)",
   },
   {
     title: "Monthly Offerings",
@@ -36,7 +37,8 @@ const stats = [
     description: "+18% vs target",
     trend: { value: 18, isPositive: true },
     icon: DollarSign,
-    gradient: "accent" as const,
+    color: "var(--color-accent-amber)",
+    bgColor: "rgba(245, 158, 11, 0.08)",
   },
 ];
 
@@ -70,16 +72,16 @@ const recentMembers = [
 export default function AdminDashboard() {
   return (
     <div className="space-y-10 pb-12 font-outfit">
-      {/* Header section */}
+      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
         >
-          <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
+          <h1 className="text-4xl font-bold tracking-tight text-heading">
             Dashboard
           </h1>
-          <p className="text-gray-500 mt-2 font-medium">
+          <p className="mt-2 font-medium text-muted-custom">
             Real-time branch analytics and member activity.
           </p>
         </motion.div>
@@ -91,36 +93,32 @@ export default function AdminDashboard() {
         >
           <Button
             variant="ghost"
-            className="rounded-xl h-12 px-6 bg-white/40 hover:bg-white/60 border border-white/40 text-gray-600 font-bold"
+            className="rounded-xl h-12 px-6 font-bold glass-panel text-muted-custom"
           >
             Reports
           </Button>
-          <Button className="rounded-xl h-12 px-6 bg-primary hover:bg-indigo-700 shadow-xl shadow-primary/20 font-bold active:scale-95 transition-all">
+          <Button className="rounded-xl h-12 px-6 bg-primary hover:bg-primary-hover text-white shadow-xl shadow-primary/20 font-bold active:scale-95 transition-all">
             <UserPlus className="mr-2 h-5 w-5" /> Add Member
           </Button>
         </motion.div>
       </div>
 
-      {/* Stats Grid */}
+      {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat, index) => (
           <GlassCard
             key={stat.title}
             intensity="medium"
-            gradient={stat.gradient}
-            className="p-6 rounded-4xl"
+            className="p-6 rounded-3xl"
+            hoverEffect="lift"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
             <div className="flex justify-between items-start mb-4">
               <div
-                className={cn(
-                  "w-12 h-12 rounded-2xl flex items-center justify-center",
-                  stat.gradient === "primary"
-                    ? "bg-primary/10 text-primary"
-                    : "bg-white/50 text-gray-600",
-                )}
+                className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                style={{ background: stat.bgColor, color: stat.color }}
               >
                 <stat.icon className="h-6 w-6" />
               </div>
@@ -129,8 +127,8 @@ export default function AdminDashboard() {
                   className={cn(
                     "px-2 py-1 rounded-lg text-[10px] font-bold",
                     stat.trend.isPositive
-                      ? "bg-mint-green/10 text-mint-green"
-                      : "bg-rose-500/10 text-rose-500",
+                      ? "bg-[rgba(16,185,129,0.08)] text-emerald"
+                      : "bg-[rgba(244,63,94,0.08)] text-coral",
                   )}
                 >
                   {stat.trend.isPositive ? "+" : "-"}
@@ -138,75 +136,88 @@ export default function AdminDashboard() {
                 </div>
               )}
             </div>
-            <div>
-              <p className="text-sm font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">
-                {stat.title}
-              </p>
-              <h3 className="text-3xl font-bold text-gray-900">{stat.value}</h3>
-              <p className="text-xs text-gray-400 font-medium mt-2">
-                {stat.description}
-              </p>
-            </div>
+            <p className="text-sm font-bold uppercase tracking-widest leading-none mb-1 text-faint">
+              {stat.title}
+            </p>
+            <h3 className="text-3xl font-bold text-heading">{stat.value}</h3>
+            <p className="text-xs font-medium mt-2 text-faint">
+              {stat.description}
+            </p>
           </GlassCard>
         ))}
       </div>
 
-      {/* Main Insights */}
+      {/* Recent members + Attendance */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Members Feed */}
-        <GlassCard
-          className="lg:col-span-2 p-8 rounded-[2.5rem]"
-          hoverEffect="none"
-        >
+        <GlassCard className="lg:col-span-2 p-8 rounded-4xl" hoverEffect="none">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">
+              <h3 className="text-2xl font-bold text-heading">
                 Recent Members
               </h3>
-              <p className="text-sm text-gray-400 font-medium">
-                Latest additions to your church congregation.
+              <p className="text-sm font-medium text-faint">
+                Latest additions to your congregation.
               </p>
             </div>
-            <Button variant="ghost" className="text-primary font-bold">
+            <Button variant="ghost" className="font-bold text-primary">
               View All
             </Button>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {recentMembers.map((member, i) => (
               <motion.div
                 key={member.email}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="flex items-center justify-between p-4 bg-white/30 rounded-2xl border border-white/40 hover:bg-white/60 transition-all group"
+                className="flex items-center justify-between p-4 rounded-2xl transition-all group"
+                style={{
+                  background: "var(--color-glass-bg)",
+                  border: "1px solid var(--color-glass-border-subtle)",
+                }}
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-linear-to-br from-primary/10 to-indigo-600/5 flex items-center justify-center text-primary font-bold">
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center font-bold"
+                    style={{
+                      background: "var(--color-primary-soft)",
+                      color: "var(--color-primary)",
+                    }}
+                  >
                     {member.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("")}
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-gray-900">
+                    <p
+                      className="text-sm font-bold"
+                      style={{ color: "var(--color-text-heading)" }}
+                    >
                       {member.name}
                     </p>
-                    <p className="text-xs text-gray-400 font-medium">
+                    <p
+                      className="text-xs font-medium"
+                      style={{ color: "var(--color-text-faint)" }}
+                    >
                       {member.email}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs font-bold text-gray-500 mb-1">
+                  <p
+                    className="text-xs font-bold mb-1"
+                    style={{ color: "var(--color-text-muted)" }}
+                  >
                     {member.date}
                   </p>
                   <span
                     className={cn(
-                      "text-[10px] font-bold px-2 py-0.5 rounded-full border",
+                      "text-[10px] font-bold px-2 py-0.5 rounded-full",
                       member.status === "New"
-                        ? "bg-primary/5 text-primary border-primary/10"
-                        : "bg-mint-green/5 text-mint-green border-mint-green/10",
+                        ? "bg-primary-soft text-primary"
+                        : "bg-[rgba(16,185,129,0.08)] text-emerald",
                     )}
                   >
                     {member.status}
@@ -217,11 +228,19 @@ export default function AdminDashboard() {
           </div>
         </GlassCard>
 
-        {/* Attendance Trends */}
-        <GlassCard className="p-8 rounded-[2.5rem]" hoverEffect="glow">
+        {/* Attendance */}
+        <GlassCard className="p-8 rounded-4xl" hoverEffect="glow">
           <div className="mb-8">
-            <h3 className="text-2xl font-bold text-gray-900">Attendance</h3>
-            <p className="text-sm text-gray-400 font-medium">
+            <h3
+              className="text-2xl font-bold"
+              style={{ color: "var(--color-text-heading)" }}
+            >
+              Attendance
+            </h3>
+            <p
+              className="text-sm font-medium"
+              style={{ color: "var(--color-text-faint)" }}
+            >
               Consistent growth pattern.
             </p>
           </div>
@@ -233,30 +252,52 @@ export default function AdminDashboard() {
                 initial={{ height: 0 }}
                 animate={{ height: `${h}%` }}
                 transition={{ delay: i * 0.1 + 0.3, type: "spring" }}
-                className="flex-1 bg-linear-to-t from-primary to-indigo-400 rounded-t-xl opacity-80 hover:opacity-100 transition-opacity shadow-lg shadow-primary/5"
+                className="flex-1 rounded-t-xl opacity-80 hover:opacity-100 transition-opacity shadow-lg"
+                style={{
+                  background: `linear-gradient(to top, var(--color-primary), #818cf8)`,
+                  boxShadow: "0 4px 12px rgba(79, 70, 229, 0.1)",
+                }}
               />
             ))}
           </div>
-          <div className="mt-4 flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2">
+          <div
+            className="mt-4 flex justify-between text-[10px] font-bold uppercase tracking-widest px-2"
+            style={{ color: "var(--color-text-faint)" }}
+          >
             <span>Mon</span>
             <span>Sun</span>
           </div>
 
-          <div className="mt-8 p-4 bg-primary/5 rounded-2xl border border-primary/10 flex items-center gap-3">
-            <TrendingUp className="h-5 w-5 text-primary" />
-            <p className="text-xs font-bold text-primary">
+          <div
+            className="mt-8 p-4 rounded-2xl flex items-center gap-3"
+            style={{
+              background: "var(--color-primary-soft)",
+              border: "1px solid rgba(79, 70, 229, 0.1)",
+            }}
+          >
+            <TrendingUp
+              className="h-5 w-5"
+              style={{ color: "var(--color-primary)" }}
+            />
+            <p
+              className="text-xs font-bold"
+              style={{ color: "var(--color-primary)" }}
+            >
               Attendance is up 12% from last week!
             </p>
           </div>
         </GlassCard>
       </div>
 
-      {/* Events Quick View */}
+      {/* Events */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <GlassCard
-          gradient="primary"
-          className="p-8 rounded-[2.5rem] text-white overflow-hidden relative"
+          className="p-8 rounded-4xl text-white overflow-hidden relative"
           hoverEffect="scale"
+          style={{
+            background:
+              "linear-gradient(135deg, var(--color-primary), #6366f1)",
+          }}
         >
           <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 blur-3xl rounded-full" />
           <div className="relative z-10 flex flex-col h-full">
@@ -277,21 +318,41 @@ export default function AdminDashboard() {
           </div>
         </GlassCard>
 
-        <GlassCard className="p-8 rounded-[2.5rem]" hoverEffect="lift">
+        <GlassCard className="p-8 rounded-4xl" hoverEffect="lift">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-600">
+            <div
+              className="w-12 h-12 rounded-2xl flex items-center justify-center"
+              style={{
+                background: "rgba(245, 158, 11, 0.1)",
+                color: "var(--color-accent-amber)",
+              }}
+            >
               <Calendar className="h-6 w-6" />
             </div>
             <div>
-              <h4 className="text-xl font-bold text-gray-900">Bible Study</h4>
-              <p className="text-sm text-gray-400 font-medium">Wed · 6 PM</p>
+              <h4
+                className="text-xl font-bold"
+                style={{ color: "var(--color-text-heading)" }}
+              >
+                Bible Study
+              </h4>
+              <p
+                className="text-sm font-medium"
+                style={{ color: "var(--color-text-faint)" }}
+              >
+                Wed · 6 PM
+              </p>
             </div>
           </div>
           <div className="flex -space-x-3 mb-6">
             {[1, 2, 3, 4, 5].map((i) => (
               <div
                 key={i}
-                className="w-10 h-10 rounded-full border-4 border-white bg-gray-50 flex items-center justify-center overflow-hidden"
+                className="w-10 h-10 rounded-full border-2 overflow-hidden"
+                style={{
+                  borderColor: "var(--color-glass-border)",
+                  background: "var(--color-glass-bg)",
+                }}
               >
                 <img
                   src={`https://i.pravatar.cc/100?u=ev${i}`}
@@ -300,30 +361,41 @@ export default function AdminDashboard() {
                 />
               </div>
             ))}
-            <div className="w-10 h-10 rounded-full border-4 border-white bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold">
+            <div
+              className="w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-bold bg-primary-soft text-primary"
+              style={{
+                borderColor: "var(--color-glass-border)",
+              }}
+            >
               +24
             </div>
           </div>
           <Button
             variant="ghost"
-            className="w-full text-indigo-600 font-bold border border-indigo-100 rounded-xl h-12"
+            className="w-full font-bold rounded-xl h-12 text-primary border border-primary/15"
           >
             View Details
           </Button>
         </GlassCard>
 
         <GlassCard
-          className="p-8 rounded-[2.5rem] flex flex-col items-center justify-center text-center space-y-4"
+          className="p-8 rounded-4xl flex flex-col items-center justify-center text-center space-y-4"
           hoverEffect="glow"
         >
-          <div className="w-16 h-16 rounded-4xl bg-mint-green/10 flex items-center justify-center text-mint-green shadow-lg shadow-mint-green/5">
+          <div
+            className="w-16 h-16 rounded-3xl flex items-center justify-center shadow-lg text-accent-emerald"
+            style={{
+              background: "rgba(16, 185, 129, 0.08)",
+              boxShadow: "0 4px 12px rgba(16, 185, 129, 0.08)",
+            }}
+          >
             <Activity className="h-8 w-8" />
           </div>
-          <h4 className="text-xl font-bold text-gray-900">Branch Health</h4>
-          <p className="text-sm text-gray-400 font-medium">
+          <h4 className="text-xl font-bold text-heading">Branch Health</h4>
+          <p className="text-sm font-medium text-faint">
             Your branch operations are running optimally across all sectors.
           </p>
-          <Button variant="ghost" className="text-mint-green font-bold">
+          <Button variant="ghost" className="font-bold text-accent-emerald">
             Operations Hub
           </Button>
         </GlassCard>

@@ -74,10 +74,16 @@ export default function Login() {
               className="h-12 w-auto transition-transform group-hover:scale-105"
             />
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1
+            className="text-3xl font-bold mb-2"
+            style={{ color: "var(--color-text-heading)" }}
+          >
             Welcome back
           </h1>
-          <p className="text-gray-500 font-medium">
+          <p
+            className="font-medium"
+            style={{ color: "var(--color-text-muted)" }}
+          >
             Continue to your workspace
           </p>
         </motion.div>
@@ -86,7 +92,7 @@ export default function Login() {
         <GlassCard
           intensity="high"
           hoverEffect="none"
-          className="p-8 lg:p-10 rounded-[2.5rem] border-white/60 shadow-2xl"
+          className="p-8 lg:p-10 rounded-[2.5rem]"
         >
           {/* Error Alert */}
           <AnimatePresence>
@@ -97,9 +103,23 @@ export default function Login() {
                 exit={{ opacity: 0, height: 0, marginBottom: 0 }}
                 className="overflow-hidden"
               >
-                <div className="p-4 bg-rose-50/80 backdrop-blur-xl border border-rose-200 rounded-2xl flex items-center gap-3">
-                  <AlertCircle className="h-5 w-5 text-rose-500 shrink-0" />
-                  <p className="text-sm text-rose-600 font-semibold">{error}</p>
+                <div
+                  className="p-4 rounded-2xl flex items-center gap-3"
+                  style={{
+                    background: "rgba(244, 63, 94, 0.08)",
+                    border: "1px solid rgba(244, 63, 94, 0.2)",
+                  }}
+                >
+                  <AlertCircle
+                    className="h-5 w-5 shrink-0"
+                    style={{ color: "var(--color-accent-coral)" }}
+                  />
+                  <p
+                    className="text-sm font-semibold"
+                    style={{ color: "var(--color-accent-coral)" }}
+                  >
+                    {error}
+                  </p>
                 </div>
               </motion.div>
             )}
@@ -107,15 +127,21 @@ export default function Login() {
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-2">
+              <label
+                className="text-xs font-bold uppercase tracking-widest ml-2"
+                style={{ color: "var(--color-text-faint)" }}
+              >
                 Email Address
               </label>
               <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors" />
+                <Mail
+                  className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors group-focus-within:text-primary"
+                  style={{ color: "var(--color-text-faint)" }}
+                />
                 <input
                   type="email"
                   placeholder="name@company.com"
-                  className="w-full pl-12 h-14 bg-white/40 border border-white/50 rounded-2xl focus:bg-white/60 focus:border-primary/30 focus:ring-4 focus:ring-primary/5 transition-all outline-none font-medium text-gray-800 placeholder:text-gray-400"
+                  className="w-full pl-12 h-14 glass-input rounded-2xl font-medium"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -125,22 +151,29 @@ export default function Login() {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between ml-2">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                <label
+                  className="text-xs font-bold uppercase tracking-widest"
+                  style={{ color: "var(--color-text-faint)" }}
+                >
                   Password
                 </label>
                 <Link
                   to="#"
-                  className="text-xs font-bold text-primary hover:text-indigo-700 transition-colors"
+                  className="text-xs font-bold transition-colors hover:underline"
+                  style={{ color: "var(--color-primary)" }}
                 >
                   Forgot password?
                 </Link>
               </div>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors" />
+                <Lock
+                  className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors group-focus-within:text-primary"
+                  style={{ color: "var(--color-text-faint)" }}
+                />
                 <input
                   type="password"
                   placeholder="••••••••"
-                  className="w-full pl-12 h-14 bg-white/40 border border-white/50 rounded-2xl focus:bg-white/60 focus:border-primary/30 focus:ring-4 focus:ring-primary/5 transition-all outline-none font-medium text-gray-800 placeholder:text-gray-400"
+                  className="w-full pl-12 h-14 glass-input rounded-2xl font-medium"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -150,7 +183,7 @@ export default function Login() {
 
             <Button
               type="submit"
-              className="w-full h-16 rounded-2xl text-lg font-bold shadow-xl shadow-primary/20 bg-primary hover:bg-indigo-700 active:scale-[0.98] transition-all group"
+              className="w-full h-16 rounded-2xl text-lg font-bold shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all group text-white"
               disabled={loading}
             >
               {loading ? (
@@ -168,9 +201,18 @@ export default function Login() {
 
             <div className="relative my-8 text-center">
               <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-gray-200/50" />
+                <span
+                  className="w-full border-t"
+                  style={{ borderColor: "var(--color-glass-border-subtle)" }}
+                />
               </div>
-              <span className="relative px-6 bg-transparent text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">
+              <span
+                className="relative px-6 text-[10px] uppercase tracking-[0.2em] font-bold"
+                style={{
+                  color: "var(--color-text-faint)",
+                  background: "var(--color-glass-bg-solid)",
+                }}
+              >
                 Or continue with
               </span>
             </div>
@@ -179,19 +221,27 @@ export default function Login() {
               type="button"
               onClick={handleGoogleLogin}
               disabled={loading}
-              className="w-full h-14 bg-white/40 border border-white/60 rounded-2xl flex items-center justify-center gap-3 font-bold text-gray-700 hover:bg-white/60 hover:shadow-md active:scale-[0.98] transition-all"
+              className="w-full h-14 glass-panel rounded-2xl flex items-center justify-center gap-3 font-bold transition-all hover:scale-[1.01] active:scale-[0.98]"
+              style={{ color: "var(--color-text-body)" }}
             >
-              <Chrome className="h-5 w-5 text-primary" />
+              <Chrome
+                className="h-5 w-5"
+                style={{ color: "var(--color-primary)" }}
+              />
               <span>Google Account</span>
             </button>
           </form>
 
           <div className="mt-10 text-center">
-            <p className="text-sm text-gray-500 font-medium">
+            <p
+              className="text-sm font-medium"
+              style={{ color: "var(--color-text-muted)" }}
+            >
               Don't have an account?{" "}
               <Link
                 to="#"
-                className="text-primary font-bold hover:underline underline-offset-4"
+                className="font-bold hover:underline underline-offset-4"
+                style={{ color: "var(--color-primary)" }}
               >
                 Request access
               </Link>
@@ -204,13 +254,17 @@ export default function Login() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="mt-10 flex items-center justify-center gap-6 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]"
+          className="mt-10 flex items-center justify-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em]"
+          style={{ color: "var(--color-text-faint)" }}
         >
           <div className="flex items-center gap-2">
             <ShieldCheck className="h-3 w-3" />
             <span>Secure Connection</span>
           </div>
-          <span className="w-1 h-1 bg-gray-300 rounded-full" />
+          <span
+            className="w-1 h-1 rounded-full"
+            style={{ background: "var(--color-text-faint)" }}
+          />
           <span>© 2026 Flock</span>
         </motion.div>
       </div>

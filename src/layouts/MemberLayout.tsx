@@ -34,15 +34,15 @@ export default function MemberLayout() {
   const isActive = (href: string) => location.pathname === href;
 
   return (
-    <div className="min-h-screen relative font-sans text-gray-900 overflow-hidden font-outfit">
+    <div className="min-h-screen relative font-sans overflow-hidden font-outfit">
       <MeshBackground />
 
-      {/* Premium Top Bar - Floating Glass Card */}
+      {/* Top Bar */}
       <header className="fixed top-4 lg:top-6 left-4 lg:left-8 right-4 lg:right-8 h-20 z-50">
         <GlassCard
           intensity="medium"
           hoverEffect="none"
-          className="w-full h-full flex items-center justify-between px-6 lg:px-10 rounded-4xl border-white/40 shadow-xl"
+          className="w-full h-full flex items-center justify-between px-6 lg:px-10 rounded-full"
         >
           <div className="flex items-center gap-10">
             <Link to="/dashboard" className="flex items-center group">
@@ -53,7 +53,7 @@ export default function MemberLayout() {
               />
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => {
                 const active = isActive(item.href);
@@ -63,16 +63,23 @@ export default function MemberLayout() {
                     to={item.href}
                     className={cn(
                       "px-5 py-2.5 rounded-xl text-sm font-semibold transition-all relative group",
-                      active
-                        ? "text-primary bg-primary/5 shadow-sm"
-                        : "text-gray-500 hover:text-gray-900 hover:bg-white/40",
+                      active ? "shadow-sm" : "",
                     )}
+                    style={{
+                      color: active
+                        ? "var(--color-primary)"
+                        : "var(--color-text-muted)",
+                      background: active
+                        ? "var(--color-primary-soft)"
+                        : "transparent",
+                    }}
                   >
                     {item.label}
                     {active && (
                       <motion.div
                         layoutId="nav-active"
-                        className="absolute bottom-1 left-5 right-5 h-0.5 bg-primary rounded-full shadow-[0_0_8px_rgba(79,70,229,0.5)]"
+                        className="absolute bottom-1 left-5 right-5 h-0.5 rounded-full shadow-[0_0_8px_rgba(79,70,229,0.5)]"
+                        style={{ background: "var(--color-primary)" }}
                       />
                     )}
                   </Link>
@@ -82,32 +89,65 @@ export default function MemberLayout() {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Search - Subtle Glass */}
-            <div className="hidden md:flex items-center bg-white/30 rounded-xl px-4 py-2 border border-white/40 focus-within:border-primary/30 focus-within:bg-white/50 transition-all">
-              <Search className="h-4 w-4 text-gray-400 mr-2" />
+            {/* Search */}
+            <div
+              className="hidden md:flex items-center rounded-xl px-4 py-2 transition-all"
+              style={{
+                background: "var(--color-glass-bg)",
+                border: "1px solid var(--color-glass-border-subtle)",
+              }}
+            >
+              <Search
+                className="h-4 w-4 mr-2"
+                style={{ color: "var(--color-text-faint)" }}
+              />
               <input
                 type="text"
                 placeholder="Search anything..."
-                className="bg-transparent border-none text-xs focus:ring-0 w-32 outline-none font-medium text-gray-700 placeholder:text-gray-400"
+                className="bg-transparent border-none text-xs focus:ring-0 w-32 outline-none font-medium"
+                style={{ color: "var(--color-text-body)" }}
               />
             </div>
 
             {/* Notification */}
-            <button className="relative w-10 h-10 rounded-xl bg-white/40 border border-white/40 flex items-center justify-center group transition-all hover:bg-white/60 hover:scale-105 active:scale-95">
-              <Bell className="h-5 w-5 text-gray-500 group-hover:text-primary transition-colors" />
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full border-2 border-white animate-pulse" />
+            <button
+              className="relative w-10 h-10 rounded-xl flex items-center justify-center group transition-all hover:scale-105 active:scale-95"
+              style={{
+                background: "var(--color-glass-bg)",
+                border: "1px solid var(--color-glass-border-subtle)",
+              }}
+            >
+              <Bell
+                className="h-5 w-5 transition-colors"
+                style={{ color: "var(--color-text-muted)" }}
+              />
+              <span
+                className="absolute top-2.5 right-2.5 w-2 h-2 bg-accent-coral rounded-full border-2 animate-pulse"
+                style={{ borderColor: "var(--color-glass-bg-solid)" }}
+              />
             </button>
 
-            <div className="h-8 w-px bg-gray-200/50 hidden sm:block mx-1" />
+            <div
+              className="h-8 w-px hidden sm:block mx-1"
+              style={{ background: "var(--color-glass-border-subtle)" }}
+            />
 
             {/* User Profile */}
             <div className="flex items-center gap-3 pl-1">
-              <div className="w-10 h-10 rounded-xl bg-linear-to-br from-primary/20 to-indigo-600/20 border border-primary/20 flex items-center justify-center font-bold text-primary shadow-sm">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center font-bold shadow-sm"
+                style={{
+                  background: "var(--color-primary-soft)",
+                  color: "var(--color-primary)",
+                  border: "1px solid rgba(79, 70, 229, 0.15)",
+                }}
+              >
                 SO
               </div>
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="lg:hidden p-2 text-gray-600 hover:text-primary transition-colors"
+                className="lg:hidden p-2 transition-colors"
+                style={{ color: "var(--color-text-muted)" }}
               >
                 <Menu className="h-6 w-6" />
               </button>
@@ -116,7 +156,7 @@ export default function MemberLayout() {
         </GlassCard>
       </header>
 
-      {/* Mobile Sidebar Overlay */}
+      {/* Mobile Sidebar */}
       <AnimatePresence>
         {sidebarOpen && (
           <>
@@ -139,14 +179,23 @@ export default function MemberLayout() {
                 className="h-full w-full rounded-l-4xl p-8 flex flex-col"
               >
                 <div className="flex items-center justify-between mb-12">
-                  <span className="font-bold text-2xl tracking-tight text-gray-900 border-b-2 border-primary/20 pb-1">
+                  <span
+                    className="font-bold text-2xl tracking-tight pb-1"
+                    style={{
+                      color: "var(--color-text-heading)",
+                      borderBottom: "2px solid var(--color-primary-soft)",
+                    }}
+                  >
                     Menu
                   </span>
                   <button
                     onClick={() => setSidebarOpen(false)}
-                    className="p-2 hover:bg-black/5 rounded-full transition-colors"
+                    className="p-2 rounded-full transition-colors"
                   >
-                    <X className="h-6 w-6 text-gray-400" />
+                    <X
+                      className="h-6 w-6"
+                      style={{ color: "var(--color-text-faint)" }}
+                    />
                   </button>
                 </div>
 
@@ -160,8 +209,13 @@ export default function MemberLayout() {
                         "flex items-center gap-4 p-5 rounded-2xl text-xl font-bold transition-all",
                         isActive(item.href)
                           ? "bg-primary text-white shadow-xl shadow-primary/25"
-                          : "text-gray-500 hover:bg-white/50 hover:text-primary",
+                          : "",
                       )}
+                      style={
+                        !isActive(item.href)
+                          ? { color: "var(--color-text-muted)" }
+                          : undefined
+                      }
                     >
                       <item.icon className="h-6 w-6" />
                       {item.label}
@@ -169,10 +223,15 @@ export default function MemberLayout() {
                   ))}
                 </div>
 
-                <div className="pt-8 border-t border-white/20">
+                <div
+                  className="pt-8"
+                  style={{
+                    borderTop: "1px solid var(--color-glass-border-subtle)",
+                  }}
+                >
                   <Button
                     variant="ghost"
-                    className="w-full justify-start gap-4 h-16 rounded-2xl text-xl font-bold text-rose-500 hover:bg-rose-50/50 transition-all"
+                    className="w-full justify-start gap-4 h-16 rounded-2xl text-xl font-bold text-accent-coral hover:bg-red-50/50 dark:hover:bg-red-900/20 transition-all"
                   >
                     <LogOut className="h-6 w-6" />
                     Sign Out
