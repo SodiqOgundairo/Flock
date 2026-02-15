@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { Button } from "@yems-ui/core";
+import { Button } from "yems-ui";
 import {
   LayoutDashboard,
   Users,

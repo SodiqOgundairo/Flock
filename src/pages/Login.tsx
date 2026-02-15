@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { Button } from "@yems-ui/core";
 import {
-  Mail,
-  Lock,
-  ArrowRight,
-  Chrome,
-  AlertCircle,
-  ShieldCheck,
-} from "lucide-react";
+  Button,
+  Input,
+  FormField,
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  Spinner,
+  Divider,
+} from "yems-ui";
+import { Mail, Lock, ArrowRight, Chrome, ShieldCheck } from "lucide-react";
 import { MeshBackground } from "@/components/ui/MeshBackground";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useAuth } from "../lib/auth";
@@ -103,60 +105,48 @@ export default function Login() {
                 exit={{ opacity: 0, height: 0, marginBottom: 0 }}
                 className="overflow-hidden"
               >
-                <div
-                  className="p-4 rounded-2xl flex items-center gap-3"
-                  style={{
-                    background: "rgba(244, 63, 94, 0.08)",
-                    border: "1px solid rgba(244, 63, 94, 0.2)",
-                  }}
+                <Alert
+                  variant="error"
+                  dismissible
+                  onDismiss={() => setError(null)}
                 >
-                  <AlertCircle
-                    className="h-5 w-5 shrink-0"
-                    style={{ color: "var(--color-accent-coral)" }}
-                  />
-                  <p
-                    className="text-sm font-semibold"
-                    style={{ color: "var(--color-accent-coral)" }}
-                  >
-                    {error}
-                  </p>
-                </div>
+                  <AlertTitle>Authentication Error</AlertTitle>
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
               </motion.div>
             )}
           </AnimatePresence>
 
           <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-              <label
-                className="text-xs font-bold uppercase tracking-widest ml-2"
-                style={{ color: "var(--color-text-faint)" }}
-              >
-                Email Address
-              </label>
-              <div className="relative group">
-                <Mail
-                  className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors group-focus-within:text-primary"
-                  style={{ color: "var(--color-text-faint)" }}
-                />
-                <input
-                  type="email"
-                  placeholder="name@company.com"
-                  className="w-full pl-12 h-14 glass-input rounded-2xl font-medium"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
+            <FormField label="Email Address" htmlFor="login-email" required>
+              <Input
+                id="login-email"
+                type="email"
+                placeholder="name@company.com"
+                leftIcon={<Mail className="h-4 w-4" />}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormField>
 
             <div className="space-y-2">
-              <div className="flex items-center justify-between ml-2">
-                <label
-                  className="text-xs font-bold uppercase tracking-widest"
-                  style={{ color: "var(--color-text-faint)" }}
+              <div className="flex items-center justify-between">
+                <FormField
+                  label="Password"
+                  htmlFor="login-password"
+                  className="flex-1"
                 >
-                  Password
-                </label>
+                  <Input
+                    id="login-password"
+                    type="password"
+                    placeholder="••••••••"
+                    leftIcon={<Lock className="h-4 w-4" />}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </FormField>
+              </div>
+              <div className="flex justify-end">
                 <Link
                   to="#"
                   className="text-xs font-bold transition-colors hover:underline"
@@ -164,20 +154,6 @@ export default function Login() {
                 >
                   Forgot password?
                 </Link>
-              </div>
-              <div className="relative group">
-                <Lock
-                  className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors group-focus-within:text-primary"
-                  style={{ color: "var(--color-text-faint)" }}
-                />
-                <input
-                  type="password"
-                  placeholder="••••••••"
-                  className="w-full pl-12 h-14 glass-input rounded-2xl font-medium"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
               </div>
             </div>
 
@@ -188,7 +164,7 @@ export default function Login() {
             >
               {loading ? (
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <Spinner size="sm" variant="white" />
                   <span>Signing in...</span>
                 </div>
               ) : (
@@ -199,22 +175,8 @@ export default function Login() {
               )}
             </Button>
 
-            <div className="relative my-8 text-center">
-              <div className="absolute inset-0 flex items-center">
-                <span
-                  className="w-full border-t"
-                  style={{ borderColor: "var(--color-glass-border-subtle)" }}
-                />
-              </div>
-              <span
-                className="relative px-6 text-[10px] uppercase tracking-[0.2em] font-bold"
-                style={{
-                  color: "var(--color-text-faint)",
-                  background: "var(--color-glass-bg-solid)",
-                }}
-              >
-                Or continue with
-              </span>
+            <div className="my-8">
+              <Divider label="Or continue with" />
             </div>
 
             <button

@@ -1,6 +1,6 @@
 import React from "react";
 import { Moon, Sun } from "lucide-react";
-import { Button } from "@yems-ui/core";
+import { Button } from "yems-ui";
 
 export function ThemeSwitcher() {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");

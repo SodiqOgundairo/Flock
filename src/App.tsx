@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import ComponentShowcase from "./pages/ComponentShowcase";
+import { Toaster } from "yems-ui";
 
 import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
@@ -20,8 +20,6 @@ function App() {
             {/* Public routes */}
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
-
-            <Route path="/components" element={<ComponentShowcase />} />
 
             {/* Member routes */}
             <Route path="/dashboard" element={<MemberLayout />}>
@@ -138,6 +136,7 @@ function App() {
 
           {/* Floating Theme Toggle — visible on all pages */}
           <ThemeToggle />
+          <Toaster />
         </BrowserRouter>
       </AuthProvider>
     </ThemeProvider>

@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Button } from "@yems-ui/core";
+import { Button, Badge } from "yems-ui";
 import {
   Calendar,
   Heart,
@@ -78,9 +78,9 @@ export default function MemberDashboard() {
             <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-primary bg-primary-soft">
               <Calendar className="h-6 w-6" />
             </div>
-            <div className="px-2 py-1 bg-[rgba(16,185,129,0.08)] text-emerald rounded-lg text-[10px] font-bold">
+            <Badge variant="soft-success" dot>
               +15%
-            </div>
+            </Badge>
           </div>
           <h3
             className="text-3xl font-bold"
@@ -108,9 +108,9 @@ export default function MemberDashboard() {
             <div className="w-12 h-12 rounded-2xl bg-[rgba(244,63,94,0.1)] flex items-center justify-center text-coral">
               <Heart className="h-6 w-6" />
             </div>
-            <div className="px-2 py-1 bg-[rgba(16,185,129,0.08)] text-emerald rounded-lg text-[10px] font-bold">
+            <Badge variant="soft-success" dot>
               +8%
-            </div>
+            </Badge>
           </div>
           <h3
             className="text-3xl font-bold"

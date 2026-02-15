@@ -1,6 +1,5 @@
 @import "tailwindcss";
-@source "../../node_modules/@yems-ui/core/dist";
-@import "@yems-ui/core/styles.css";
+@source "../../node_modules/yems-ui/dist";
 
 /* =============================================================================
    FLOCK DESIGN SYSTEM — LIQUID GLASS V3

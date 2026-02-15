@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { Link } from "react-router-dom";
-import { Button } from "@yems-ui/core";
+import { Button } from "yems-ui";
 import {
   ArrowRight,
   Globe,

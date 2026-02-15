@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Button } from "@yems-ui/core";
+import { Button, Badge } from "yems-ui";
 import {
   Users,
   Calendar,
@@ -10,7 +10,6 @@ import {
   UserPlus,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { cn } from "@/lib/utils";
 
 const stats = [
   {
@@ -123,17 +122,15 @@ export default function AdminDashboard() {
                 <stat.icon className="h-6 w-6" />
               </div>
               {stat.trend && (
-                <div
-                  className={cn(
-                    "px-2 py-1 rounded-lg text-[10px] font-bold",
-                    stat.trend.isPositive
-                      ? "bg-[rgba(16,185,129,0.08)] text-emerald"
-                      : "bg-[rgba(244,63,94,0.08)] text-coral",
-                  )}
+                <Badge
+                  variant={
+                    stat.trend.isPositive ? "soft-success" : "soft-error"
+                  }
+                  dot
                 >
                   {stat.trend.isPositive ? "+" : "-"}
                   {stat.trend.value}%
-                </div>
+                </Badge>
               )}
             </div>
             <p className="text-sm font-bold uppercase tracking-widest leading-none mb-1 text-faint">
@@ -212,16 +209,14 @@ export default function AdminDashboard() {
                   >
                     {member.date}
                   </p>
-                  <span
-                    className={cn(
-                      "text-[10px] font-bold px-2 py-0.5 rounded-full",
-                      member.status === "New"
-                        ? "bg-primary-soft text-primary"
-                        : "bg-[rgba(16,185,129,0.08)] text-emerald",
-                    )}
+                  <Badge
+                    variant={
+                      member.status === "New" ? "soft-primary" : "soft-success"
+                    }
+                    dot
                   >
                     {member.status}
-                  </span>
+                  </Badge>
                 </div>
               </motion.div>
             ))}
