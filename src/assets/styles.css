@@ -335,6 +335,85 @@
     scrollbar-width: none;
   }
 
+  /* Marquee — infinite scroll */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  /* Animated gradient border */
+  @keyframes gradient-rotate {
+    0% {
+      --angle: 0deg;
+    }
+    100% {
+      --angle: 360deg;
+    }
+  }
+
+  .animated-border {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .animated-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      transparent 40%,
+      var(--color-primary) 50%,
+      transparent 60%
+    );
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: gradient-rotate 3s linear infinite;
+  }
+
+  .animated-border:hover::before {
+    opacity: 1;
+  }
+
+  /* Shimmer text */
+  @keyframes shimmer-text {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .shimmer-text {
+    background-size: 200% auto;
+    animation: shimmer-text 4s linear infinite;
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
