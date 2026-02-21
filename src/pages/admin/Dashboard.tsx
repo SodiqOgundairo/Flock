@@ -1,15 +1,56 @@
+import { useRef } from "react";
 import { motion } from "motion/react";
-import { Button, Badge } from "yems-ui";
+import { Button, Badge, Card, AvatarGroup } from "devign";
+import { Calendar, TrendingUp, Activity, UserPlus } from "lucide-react";
 import {
-  Users,
-  Calendar,
-  DollarSign,
-  UserCircle,
-  TrendingUp,
-  Activity,
-  UserPlus,
-} from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+  UsersIcon as AnimUsersIcon,
+  DollarSignIcon as AnimDollarIcon,
+} from "lucide-animated";
+
+/* ─── Animated stat icon wrapper ─── */
+function AnimStatIcon({
+  icon: Icon,
+  color,
+  bg,
+}: {
+  icon: typeof AnimUsersIcon;
+  color: string;
+  bg: string;
+}) {
+  const ref = useRef<{ startAnimation: () => void; stopAnimation: () => void }>(
+    null,
+  );
+  return (
+    <div
+      className="w-12 h-12 rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110"
+      style={{ background: bg, color }}
+      onMouseEnter={() => ref.current?.startAnimation()}
+      onMouseLeave={() => ref.current?.stopAnimation()}
+    >
+      <Icon ref={ref} size={24} />
+    </div>
+  );
+}
+
+/* ─── Static fallback icon wrapper (for icons not in lucide-animated) ─── */
+function StaticStatIcon({
+  icon: Icon,
+  color,
+  bg,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
+  bg: string;
+}) {
+  return (
+    <div
+      className="w-12 h-12 rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 group/icon"
+      style={{ background: bg, color }}
+    >
+      <Icon className="h-6 w-6 transition-transform duration-300 group-hover/icon:rotate-12 group-hover/icon:scale-110" />
+    </div>
+  );
+}
 
 const stats = [
   {
@@ -17,7 +58,9 @@ const stats = [
     value: "1,234",
     description: "+12% from last month",
     trend: { value: 12, isPositive: true },
-    icon: Users,
+    renderIcon: (c: string, bg: string) => (
+      <AnimStatIcon icon={AnimUsersIcon} color={c} bg={bg} />
+    ),
     color: "var(--color-primary)",
     bgColor: "rgba(79, 70, 229, 0.08)",
   },
@@ -26,7 +69,9 @@ const stats = [
     value: "24",
     description: "+2 new groups",
     trend: { value: 2, isPositive: true },
-    icon: UserCircle,
+    renderIcon: (c: string, bg: string) => (
+      <StaticStatIcon icon={Activity} color={c} bg={bg} />
+    ),
     color: "var(--color-accent-sky)",
     bgColor: "rgba(14, 165, 233, 0.08)",
   },
@@ -35,7 +80,9 @@ const stats = [
     value: "₦2.4M",
     description: "+18% vs target",
     trend: { value: 18, isPositive: true },
-    icon: DollarSign,
+    renderIcon: (c: string, bg: string) => (
+      <AnimStatIcon icon={AnimDollarIcon} color={c} bg={bg} />
+    ),
     color: "var(--color-accent-amber)",
     bgColor: "rgba(245, 158, 11, 0.08)",
   },
@@ -105,22 +152,16 @@ export default function AdminDashboard() {
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat, index) => (
-          <GlassCard
+          <Card
             key={stat.title}
-            intensity="medium"
+            hover
             className="p-6 rounded-3xl"
-            hoverEffect="lift"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
             <div className="flex justify-between items-start mb-4">
-              <div
-                className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                style={{ background: stat.bgColor, color: stat.color }}
-              >
-                <stat.icon className="h-6 w-6" />
-              </div>
+              {stat.renderIcon(stat.color, stat.bgColor)}
               {stat.trend && (
                 <Badge
                   variant={
@@ -140,13 +181,13 @@ export default function AdminDashboard() {
             <p className="text-xs font-medium mt-2 text-faint">
               {stat.description}
             </p>
-          </GlassCard>
+          </Card>
         ))}
       </div>
 
       {/* Recent members + Attendance */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <GlassCard className="lg:col-span-2 p-8 rounded-4xl" hoverEffect="none">
+        <Card className="lg:col-span-2 p-8 rounded-4xl">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h3 className="text-2xl font-bold text-heading">
@@ -221,10 +262,10 @@ export default function AdminDashboard() {
               </motion.div>
             ))}
           </div>
-        </GlassCard>
+        </Card>
 
         {/* Attendance */}
-        <GlassCard className="p-8 rounded-4xl" hoverEffect="glow">
+        <Card hover className="p-8 rounded-4xl">
           <div className="mb-8">
             <h3
               className="text-2xl font-bold"
@@ -281,14 +322,14 @@ export default function AdminDashboard() {
               Attendance is up 12% from last week!
             </p>
           </div>
-        </GlassCard>
+        </Card>
       </div>
 
       {/* Events */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <GlassCard
+        <Card
+          hover
           className="p-8 rounded-4xl text-white overflow-hidden relative"
-          hoverEffect="scale"
           style={{
             background:
               "linear-gradient(135deg, var(--color-primary), #6366f1)",
@@ -311,9 +352,9 @@ export default function AdminDashboard() {
               Manage Event
             </Button>
           </div>
-        </GlassCard>
+        </Card>
 
-        <GlassCard className="p-8 rounded-4xl" hoverEffect="lift">
+        <Card hover className="p-8 rounded-4xl">
           <div className="flex items-center gap-4 mb-6">
             <div
               className="w-12 h-12 rounded-2xl flex items-center justify-center"
@@ -339,43 +380,27 @@ export default function AdminDashboard() {
               </p>
             </div>
           </div>
-          <div className="flex -space-x-3 mb-6">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className="w-10 h-10 rounded-full border-2 overflow-hidden"
-                style={{
-                  borderColor: "var(--color-glass-border)",
-                  background: "var(--color-glass-bg)",
-                }}
-              >
-                <img
-                  src={`https://i.pravatar.cc/100?u=ev${i}`}
-                  alt="user"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-            <div
-              className="w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-bold bg-primary-soft text-primary"
-              style={{
-                borderColor: "var(--color-glass-border)",
-              }}
-            >
-              +24
-            </div>
-          </div>
+          <AvatarGroup
+            avatars={Array.from({ length: 29 }, (_, i) => ({
+              src: `https://i.pravatar.cc/100?u=ev${i + 1}`,
+              fallback: `M${i + 1}`,
+              alt: "Member",
+            }))}
+            max={5}
+            size="md"
+            className="mb-6"
+          />
           <Button
             variant="ghost"
             className="w-full font-bold rounded-xl h-12 text-primary border border-primary/15"
           >
             View Details
           </Button>
-        </GlassCard>
+        </Card>
 
-        <GlassCard
+        <Card
+          hover
           className="p-8 rounded-4xl flex flex-col items-center justify-center text-center space-y-4"
-          hoverEffect="glow"
         >
           <div
             className="w-16 h-16 rounded-3xl flex items-center justify-center shadow-lg text-accent-emerald"
@@ -393,7 +418,7 @@ export default function AdminDashboard() {
           <Button variant="ghost" className="font-bold text-accent-emerald">
             Operations Hub
           </Button>
-        </GlassCard>
+        </Card>
       </div>
     </div>
   );

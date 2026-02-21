@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { Button } from "yems-ui";
+import { Button, Card } from "devign";
 import {
   Home,
   User,
@@ -15,7 +15,6 @@ import {
   Search,
 } from "lucide-react";
 import { MeshBackground } from "@/components/ui/MeshBackground";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { cn } from "@/lib/utils";
 import { LOGO } from "@/lib/assets";
 
@@ -39,11 +38,7 @@ export default function MemberLayout() {
 
       {/* Top Bar */}
       <header className="fixed top-4 lg:top-6 left-4 lg:left-8 right-4 lg:right-8 h-20 z-50">
-        <GlassCard
-          intensity="medium"
-          hoverEffect="none"
-          className="w-full h-full flex items-center justify-between px-6 lg:px-10 rounded-full"
-        >
+        <Card className="w-full h-full flex items-center justify-between px-6 lg:px-10 rounded-full">
           <div className="flex items-center gap-10">
             <Link to="/dashboard" className="flex items-center group">
               <img
@@ -153,7 +148,7 @@ export default function MemberLayout() {
               </button>
             </div>
           </div>
-        </GlassCard>
+        </Card>
       </header>
 
       {/* Mobile Sidebar */}
@@ -174,10 +169,7 @@ export default function MemberLayout() {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 bottom-0 w-80 z-70 lg:hidden"
             >
-              <GlassCard
-                intensity="high"
-                className="h-full w-full rounded-l-4xl p-8 flex flex-col"
-              >
+              <Card className="h-full w-full rounded-l-4xl p-8 flex flex-col">
                 <div className="flex items-center justify-between mb-12">
                   <span
                     className="font-bold text-2xl tracking-tight pb-1"
@@ -237,7 +229,7 @@ export default function MemberLayout() {
                     Sign Out
                   </Button>
                 </div>
-              </GlassCard>
+              </Card>
             </motion.aside>
           </>
         )}

@@ -1,16 +1,13 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { cn } from "../../lib/utils";
+import { Card, CardContent, CardTitle, CardDescription } from "devign";
+import { cn } from "@/lib/utils";
 
-interface BentoGridProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-export const BentoGrid: React.FC<BentoGridProps> = ({
+export function BentoGrid({
   children,
   className,
-}) => {
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <div
       className={cn(
@@ -21,7 +18,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({
       {children}
     </div>
   );
-};
+}
 
 interface BentoCardProps {
   title: string;
@@ -31,50 +28,31 @@ interface BentoCardProps {
   className?: string;
 }
 
-export const BentoCard: React.FC<BentoCardProps> = ({
+export function BentoCard({
   title,
   description,
   header,
   icon,
   className,
-}) => {
+}: BentoCardProps) {
   return (
-    <motion.div
-      whileHover={{ y: -6, scale: 1.01 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+    <Card
+      hover
       className={cn(
-        // Base glass card styling
-        "row-span-1 rounded-4xl group/bento transition-all duration-300",
-        "p-5 flex flex-col space-y-4",
-        // Premium glassmorphism
-        "bg-white/50 backdrop-blur-2xl",
-        "border border-white/60",
-        // Enhanced shadow system with glow
-        "shadow-[0_8px_32px_rgba(31,38,135,0.1),inset_0_1px_0_rgba(255,255,255,0.6)]",
-        "hover:shadow-[0_20px_50px_rgba(80,0,171,0.12),inset_0_1px_0_rgba(255,255,255,0.8)]",
-        // Hover border highlight
-        "hover:border-true-azure/20",
+        "row-span-1 flex flex-col gap-4 p-5 group/bento",
         className,
       )}
     >
       {header && (
-        <div className="flex flex-1 w-full h-full min-h-24 rounded-2xl bg-linear-to-br from-true-azure/5 via-white/20 to-sunflower-gold/5 overflow-hidden border border-white/30">
+        <div className="flex-1 rounded-2xl overflow-hidden bg-primary/4 border border-border">
           {header}
         </div>
       )}
-      <div className="group-hover/bento:translate-x-2 transition-transform duration-300">
-        {icon && (
-          <div className="mb-2 text-true-azure/80 group-hover/bento:text-true-azure transition-colors">
-            {icon}
-          </div>
-        )}
-        <div className="font-bold text-gray-900 mb-1.5 mt-2 font-outfit tracking-tight">
-          {title}
-        </div>
-        <div className="font-normal text-gray-500 text-xs leading-relaxed">
-          {description}
-        </div>
-      </div>
-    </motion.div>
+      <CardContent className="p-0 group-hover/bento:translate-x-1 transition-transform duration-300">
+        {icon && <div className="mb-2 text-primary">{icon}</div>}
+        <CardTitle className="mb-1">{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardContent>
+    </Card>
   );
-};
+}

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView } from "motion/react";
 import { Link } from "react-router-dom";
-import { Button } from "yems-ui";
+import { Button, Card } from "devign";
 import {
   ArrowRight,
   Globe,
@@ -19,8 +19,9 @@ import {
   Music,
 } from "lucide-react";
 import { MeshBackground } from "@/components/ui/MeshBackground";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { LOGO } from "@/lib/assets";
+import { HERO_IMAGES } from "@/lib/assets";
+import AdminHeader from "@/components/ui/AdminHeader";
+import AdminFooter from "@/components/ui/Adminfooter";
 
 /* ============================================================================
    ANIMATED SECTION WRAPPER
@@ -218,43 +219,11 @@ export default function Landing() {
       {/* ================================================================
           NAVIGATION
           ================================================================ */}
-      <nav className="fixed top-4 lg:top-5 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50">
-        <GlassCard
-          intensity="medium"
-          hoverEffect="none"
-          className="h-14 lg:h-16 px-5 lg:px-8 flex items-center justify-between rounded-full"
-        >
-          <div className="flex items-center group">
-            <img
-              src={LOGO.svg}
-              alt="Flock"
-              className="h-8 lg:h-9 w-auto transition-transform group-hover:scale-105"
-            />
-          </div>
-
-          <div className="hidden md:flex items-center gap-1">
-            {["Features", "Pricing", "About"].map((item) => (
-              <Link
-                key={item}
-                to="#"
-                className="px-4 py-1.5 rounded-lg text-[13px] font-semibold transition-all hover:bg-glass-bg-hover"
-                style={{ color: "var(--color-text-muted)" }}
-              >
-                {item}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" className="bg-transparent" size="default">
-              <Link to="/login">Login</Link>
-            </Button>
-            <Button variant="primary" size="default">
-              <Link to="/register">Get Started</Link>
-            </Button>
-          </div>
-        </GlassCard>
-      </nav>
+      <AdminHeader
+        variant="landing"
+        ctaPrimary={{ label: "Get Started", href: "/register" }}
+        ctaSecondary={{ label: "Login", href: "/login" }}
+      />
 
       {/* ================================================================
           HERO SECTION
@@ -402,7 +371,7 @@ export default function Landing() {
               {/* Main hero image */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1529070538774-1779cb3deba3?w=800&h=600&fit=crop&q=80"
+                  src={HERO_IMAGES.community}
                   alt="Community gathering"
                   className="w-full h-[420px] object-cover"
                 />
@@ -425,11 +394,7 @@ export default function Landing() {
                 }}
                 className="absolute -top-4 -left-4"
               >
-                <GlassCard
-                  intensity="high"
-                  hoverEffect="none"
-                  className="py-3 px-4 rounded-xl flex items-center gap-2.5"
-                >
+                <Card className="py-3 px-4 rounded-xl flex items-center gap-2.5">
                   <div
                     className="w-9 h-9 rounded-lg flex items-center justify-center"
                     style={{
@@ -453,7 +418,7 @@ export default function Landing() {
                       +124%
                     </p>
                   </div>
-                </GlassCard>
+                </Card>
               </motion.div>
 
               {/* Floating stat card — bottom right */}
@@ -467,11 +432,7 @@ export default function Landing() {
                 }}
                 className="absolute -bottom-3 -right-3"
               >
-                <GlassCard
-                  intensity="high"
-                  hoverEffect="none"
-                  className="py-3 px-4 rounded-xl flex items-center gap-2.5"
-                >
+                <Card className="py-3 px-4 rounded-xl flex items-center gap-2.5">
                   <div
                     className="w-9 h-9 rounded-lg flex items-center justify-center"
                     style={{
@@ -495,7 +456,7 @@ export default function Landing() {
                       98.2%
                     </p>
                   </div>
-                </GlassCard>
+                </Card>
               </motion.div>
 
               {/* Orbiting element */}
@@ -562,11 +523,7 @@ export default function Landing() {
           ================================================================ */}
       <section className="py-10 px-6">
         <div className="max-w-4xl mx-auto">
-          <GlassCard
-            intensity="medium"
-            hoverEffect="none"
-            className="rounded-2xl p-6 lg:p-8"
-          >
+          <Card className="rounded-2xl p-6 lg:p-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {stats.map((stat, i) => (
                 <AnimatedSection key={stat.label} delay={i * 0.08}>
@@ -590,7 +547,7 @@ export default function Landing() {
                 </AnimatedSection>
               ))}
             </div>
-          </GlassCard>
+          </Card>
         </div>
       </section>
 
@@ -624,9 +581,9 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((feature, i) => (
               <AnimatedSection key={feature.title} delay={i * 0.08}>
-                <GlassCard
+                <Card
+                  hover
                   className="p-6 lg:p-8 rounded-2xl group cursor-pointer h-full animated-border"
-                  hoverEffect="glow"
                 >
                   <div className="flex items-start justify-between mb-5">
                     <div
@@ -655,7 +612,7 @@ export default function Landing() {
                   >
                     {feature.description}
                   </p>
-                </GlassCard>
+                </Card>
               </AnimatedSection>
             ))}
           </div>
@@ -685,9 +642,9 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {testimonials.map((testimonial, i) => (
               <AnimatedSection key={testimonial.author} delay={i * 0.12}>
-                <GlassCard
+                <Card
+                  hover
                   className="p-6 lg:p-8 rounded-2xl h-full flex flex-col"
-                  hoverEffect="lift"
                 >
                   {/* Stars */}
                   <div className="flex gap-0.5 mb-5">
@@ -731,7 +688,7 @@ export default function Landing() {
                       </p>
                     </div>
                   </div>
-                </GlassCard>
+                </Card>
               </AnimatedSection>
             ))}
           </div>
@@ -744,11 +701,7 @@ export default function Landing() {
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto">
           <AnimatedSection>
-            <GlassCard
-              intensity="high"
-              hoverEffect="none"
-              className="rounded-3xl p-10 lg:p-12 text-center relative overflow-hidden"
-            >
+            <Card className="rounded-3xl p-10 lg:p-12 text-center relative overflow-hidden">
               {/* Gradient accent */}
               <div
                 className="absolute -top-16 -right-16 w-48 h-48 rounded-full pointer-events-none"
@@ -802,7 +755,7 @@ export default function Landing() {
                   </Link>
                 </div>
               </div>
-            </GlassCard>
+            </Card>
           </AnimatedSection>
         </div>
       </section>
@@ -810,87 +763,7 @@ export default function Landing() {
       {/* ================================================================
           FOOTER
           ================================================================ */}
-      <footer
-        className="py-14 px-6"
-        style={{ borderTop: "1px solid var(--color-glass-border-subtle)" }}
-      >
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
-            {/* Brand */}
-            <div className="md:col-span-1">
-              <div className="flex items-center gap-3 mb-3 text-heading">
-                <img src={LOGO.svg} alt="Flock" className="h-7 w-auto" />
-              </div>
-              <p className="text-sm font-medium leading-relaxed text-muted-custom">
-                The most sophisticated church management experience ever built.
-              </p>
-            </div>
-
-            {/* Links */}
-            {[
-              {
-                title: "Product",
-                links: ["Features", "Pricing", "Integrations", "Changelog"],
-              },
-              {
-                title: "Company",
-                links: ["About", "Blog", "Careers", "Contact"],
-              },
-              {
-                title: "Legal",
-                links: ["Privacy", "Terms", "Security", "GDPR"],
-              },
-            ].map((section) => (
-              <div key={section.title}>
-                <h4
-                  className="text-[10px] font-bold uppercase tracking-widest mb-3"
-                  style={{ color: "var(--color-text-faint)" }}
-                >
-                  {section.title}
-                </h4>
-                <ul className="space-y-2.5">
-                  {section.links.map((link) => (
-                    <li key={link}>
-                      <Link
-                        to="#"
-                        className="text-sm font-medium transition-colors hover:text-primary"
-                        style={{ color: "var(--color-text-muted)" }}
-                      >
-                        {link}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom bar */}
-          <div
-            className="flex flex-col md:flex-row justify-between items-center gap-3 pt-6"
-            style={{ borderTop: "1px solid var(--color-glass-border-subtle)" }}
-          >
-            <span
-              className="text-[11px] font-medium"
-              style={{ color: "var(--color-text-faint)" }}
-            >
-              © 2026 Flock. Crafted with care.
-            </span>
-            <div className="flex gap-5">
-              {["Twitter", "GitHub", "LinkedIn"].map((social) => (
-                <Link
-                  key={social}
-                  to="#"
-                  className="text-[11px] font-bold uppercase tracking-widest transition-colors hover:text-primary"
-                  style={{ color: "var(--color-text-faint)" }}
-                >
-                  {social}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
+      <AdminFooter variant="landing" />
     </div>
   );
 }

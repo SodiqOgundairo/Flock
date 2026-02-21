@@ -10,10 +10,9 @@ import {
   AlertDescription,
   Spinner,
   Divider,
-} from "yems-ui";
+} from "devign";
 import { Mail, Lock, ArrowRight, Chrome, ShieldCheck } from "lucide-react";
 import { MeshBackground } from "@/components/ui/MeshBackground";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { useAuth } from "../lib/auth";
 import { LOGO } from "@/lib/assets";
 
@@ -91,10 +90,14 @@ export default function Login() {
         </motion.div>
 
         {/* Login Card */}
-        <GlassCard
-          intensity="high"
-          hoverEffect="none"
+        <div
           className="p-8 lg:p-10 rounded-[2.5rem]"
+          style={{
+            background: "rgba(255,255,255,0.55)",
+            backdropFilter: "blur(24px) saturate(180%)",
+            border: "1px solid rgba(255,255,255,0.6)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
+          }}
         >
           {/* Error Alert */}
           <AnimatePresence>
@@ -209,7 +212,7 @@ export default function Login() {
               </Link>
             </p>
           </div>
-        </GlassCard>
+        </div>
 
         {/* Footer Info */}
         <motion.div

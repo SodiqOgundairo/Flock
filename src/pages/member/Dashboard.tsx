@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Button, Badge } from "yems-ui";
+import { Button, Badge, Card } from "devign";
 import {
   Calendar,
   Heart,
@@ -9,7 +9,6 @@ import {
   ChevronRight,
   ArrowRight,
 } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { cn } from "@/lib/utils";
 
 export default function MemberDashboard() {
@@ -66,10 +65,9 @@ export default function MemberDashboard() {
 
       {/* Hero Personal Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <GlassCard
-          intensity="medium"
+        <Card
+          hover
           className="p-6 rounded-[2.5rem]"
-          hoverEffect="lift"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0 }}
@@ -94,12 +92,11 @@ export default function MemberDashboard() {
           >
             Events Attended
           </p>
-        </GlassCard>
+        </Card>
 
-        <GlassCard
-          intensity="medium"
+        <Card
+          hover
           className="p-6 rounded-[2.5rem]"
-          hoverEffect="lift"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -124,12 +121,11 @@ export default function MemberDashboard() {
           >
             Total Giving
           </p>
-        </GlassCard>
+        </Card>
 
-        <GlassCard
-          intensity="medium"
+        <Card
+          hover
           className="p-6 rounded-[2.5rem]"
-          hoverEffect="lift"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -151,15 +147,12 @@ export default function MemberDashboard() {
           >
             Lekki Bible Study
           </p>
-        </GlassCard>
+        </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Upcoming Events */}
-        <GlassCard
-          className="lg:col-span-2 p-8 rounded-[2.5rem]"
-          hoverEffect="none"
-        >
+        <Card className="lg:col-span-2 p-8 rounded-[2.5rem]">
           <div className="flex items-center justify-between mb-8">
             <h3
               className="text-2xl font-bold"
@@ -212,13 +205,12 @@ export default function MemberDashboard() {
               </p>
             </div>
           </div>
-        </GlassCard>
+        </Card>
 
         {/* Group Spotlight */}
-        <GlassCard
-          gradient="primary"
+        <Card
+          hover
           className="p-8 rounded-[2.5rem] text-white flex flex-col justify-between relative overflow-hidden"
-          hoverEffect="scale"
           style={{
             background:
               "linear-gradient(135deg, var(--color-primary), #6366f1)",
@@ -240,15 +232,11 @@ export default function MemberDashboard() {
           <Button className="relative z-10 w-full rounded-xl h-14 bg-white text-primary hover:bg-white/90 font-bold mt-8 shadow-xl">
             Message Group
           </Button>
-        </GlassCard>
+        </Card>
       </div>
 
       {/* Spirit Nourishment */}
-      <GlassCard
-        intensity="low"
-        className="p-10 rounded-[3rem] text-center max-w-4xl mx-auto"
-        hoverEffect="glow"
-      >
+      <Card hover className="p-10 rounded-[3rem] text-center max-w-4xl mx-auto">
         <Sparkles
           className="h-10 w-10 mx-auto mb-6"
           style={{ color: "var(--color-accent-amber)" }}
@@ -276,7 +264,7 @@ export default function MemberDashboard() {
             style={{ background: "rgba(79, 70, 229, 0.2)" }}
           />
         </div>
-      </GlassCard>
+      </Card>
     </div>
   );
 }
